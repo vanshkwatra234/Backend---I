@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Students</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registered Students</h1>
+        <ul id="students-list"></ul>
+        <a href="/">Go Back to Registration Page</a>
+    </div>
+
+    <script>
+        const fetchStudents = async () => {
+            try {
+                const response = await fetch('/api/users');
+                const students = await response.json();
+
+                const studentsList = document.getElementById('students-list');
+                students.forEach(student => {
+                    const li = document.createElement('li');
+                    li.textContent = `${student.username} (${student.email}, ${student.phone}, ${student.gender})`;
+                    studentsList.appendChild(li);
+                });
+            } 
+            
+            catch (error) {
+                console.error("Error fetching students:", error);
+            }
+        };
+
+        fetchStudents();
+    </script>
+</body>
+</html>
